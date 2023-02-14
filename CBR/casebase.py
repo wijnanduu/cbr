@@ -236,7 +236,7 @@ class casebase(list):
         super(casebase, self).__init__(cases)
 
         # Initialize some variables used by the statistics functions. 
-        self.inds = range(len(df.index))
+        self.inds = range(len(cases))
         self.adf = pd.DataFrame() 
         self.forcing_initialized = False 
         self.consistency_initialized = False
@@ -468,7 +468,7 @@ class casebase(list):
     # Bundles some report functions to analyze the CB. 
     def analyze(self):
         self.report_consistency()
-        # self.report_bcitability_PR()      
+        self.report_bcitability_PR()      
         # self.report_bcitability_PRp()      
         # self.report_bcitability_WGPV()       
         self.report_landmarks()
