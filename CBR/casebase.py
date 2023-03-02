@@ -141,7 +141,7 @@ class casebase(list):
         Fd: A dictionary version of the forcing relation.
         Fid: A dictionary version of the inverse of the forcing relation.  
     """
-    def __init__(self, csv, catcs=None, replace=False, manords={}, verb=False, method='logreg', size=-1, shuffle=True):
+    def __init__(self, csv, catcs=None, replace=False, manords={}, verb=False, method='logreg', size=-1, shuffle=False):
         # Read the csv file and create a list holding the column names. 
         df = pd.read_csv(csv)
         assert "Label" in df.columns.values, "There is no 'Label' column in the csv data."
