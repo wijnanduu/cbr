@@ -174,7 +174,6 @@ class casebase(list):
 
         # Determine the order based on a method that works with a 'coefficient function'.
         if method == 'pearson' or 'logreg':
-
             # Compute the coefficient dictionary based on either the pearson or logreg method.
             if method == 'pearson':
                 coeffs = pd.get_dummies(df.drop(manords, axis='columns')).corr()["Label"]
@@ -454,6 +453,7 @@ class casebase(list):
             self.init_forcing()
 
         removals = 0
+        rems = []
         Id = deepcopy(self.Id)
         while sum(s := [len(Id[i]) for i in self.inds]) != 0:
             k = np.argmax(s)
@@ -461,9 +461,11 @@ class casebase(list):
                 Id[i] -= {k}
             Id[k] = set()
             removals += 1
+            rems += [k]
 
         # Print the resulting statistic.
         print(f"Removals to obtain cons.: {removals}/{len(self)} = {round(removals/len(self)*100, 1)}%")
+        return [self[i] for i in self.inds if i not in rems]
 
     # Bundles some report functions to analyze the CB. 
     def analyze(self):
@@ -472,7 +474,7 @@ class casebase(list):
         # self.report_bcitability_PRp()      
         # self.report_bcitability_WGPV()       
         self.report_landmarks()
-        self.report_minimumdeletions()
+        return self.report_minimumdeletions()
 
     # A function which pretty prints a comparison between cases a and b.
     # Mostly useful for debugging purposes. 
